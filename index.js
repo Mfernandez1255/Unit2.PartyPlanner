@@ -54,6 +54,11 @@ function renderEvents() {
       return li;
 });
   eventList.replaceChildren(...eventCards);
+  
+  const deleteButtons = document.querySelectorAll(".delete-button");
+  deleteButtons.forEach((button) => {
+    button.addEventListener("click", deleteEvent);
+  });
   }
 
 
@@ -88,3 +93,4 @@ async function addEvent(event) {
     console.error(error);
   }
 }
+
