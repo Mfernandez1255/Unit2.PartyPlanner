@@ -49,7 +49,6 @@ function renderEvents() {
       li.innerHTML = `
       <h2>${event.name}</h2>
       <h3>${event.date}</h3>
-        <li>${event.time}<li>
         <li>${event.location}</li>
          <p>${event.description}</p>`;
       return li;
@@ -62,6 +61,7 @@ function renderEvents() {
  * Ask the API to create a new artist based on form data
  * @param {Event} event
  */
+
 async function addEvent(event) {
   event.preventDefault();
 
@@ -73,7 +73,8 @@ async function addEvent(event) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         name: addEventForm.name.value,
-        imageUrl: addEventForm.imageUrl.value,
+        date: addEventForm.date.value,
+        location: addEventForm.location.value,
         description: addEventForm.description.value,
       }),
     });
