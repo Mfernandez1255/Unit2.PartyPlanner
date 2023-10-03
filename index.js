@@ -50,15 +50,13 @@ function renderEvents() {
       <h2>${event.name}</h2>
       <h3>${event.date}</h3>
         <li>${event.location}</li>
-         <p>${event.description}</p>`;
+         <p>${event.description}</p>
+         <button class="delete-button" data-id="${event.id}">Delete</button>`;
       return li;
 });
   eventList.replaceChildren(...eventCards);
-  
-  const deleteButtons = document.querySelectorAll(".delete-button");
-  deleteButtons.forEach((button) => {
-    button.addEventListener("click", deleteEvent);
-  });
+
+  addEventListenersToDeleteButtons();
   }
 
 
@@ -92,5 +90,31 @@ async function addEvent(event) {
   } catch (error) {
     console.error(error);
   }
+}
+
+async function deleteEvent(event) {
+  const eventId = event.target.getAttribute("data-id");
+
+  try {
+    const response = await fetch(`${API_URL}/${eventId}`, {
+      method: "DELETE",
+    });
+    if (!response.ok) {
+      throw new Error("Failed to delete event");
+    }
+
+    state.events = state.events.filter((event) => event.id !== eventId);
+
+    render();
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+function addEventListenersToDeleteButtons() {
+  const deleteButtons = document.querySelectorAll(".delete-button");
+  deleteButtons.forEach((button) => {
+    button.addEventListener("click", deleteEvent);
+  });
 }
 
